@@ -1,5 +1,6 @@
 const path = require('path')//webpack核心模块，专门解析文件路径
 const webpack = require('webpack')//引入webpack
+const ExtractTextPlugin = require('extract-text-webpack-plugin')//现在配置的是webpack2 3中这个插件又差距 webpack2中需要装extract-text-webpack-plugin@2.1.2这个版本
 
 module.exports = {
   entry: "./src/index.js",
@@ -18,14 +19,16 @@ module.exports = {
   // 牺牲了构建速度的 `source-map' 是最详细的。
   module: {
     rules: [//rules规则 loader增强器
-      { test: /\.js[x]?$/, exclude: /node_modules/, loader: "babel-loader" },//webpack文件打包碰到.js结尾的文件  先用babel-loader处理
+      {
+        test: /\.js[x]?$/, exclude: /node_modules/,
+        loader: "babel-loader"
+      },//webpack文件打包碰到.js结尾的文件  先用babel-loader处理
       {
         test: /\.css$/,
-        use: [
-          'style-loader',
-          { loader: 'css-loader', options: { importLoaders: 1 } },//可以打包css，功能比较强大
-          'postcss-loader'
-        ]
+        use: ExtractTextPlugin.extract({//css编译比较强大
+          fallback: "style-loader",
+          use: ["css-loader","postcss-loader"]
+        })
       },
       {
         test: /\.(png|jpg|gif)$/,//打包img
@@ -34,11 +37,15 @@ module.exports = {
     ]
   },
   plugins: [//插件
-    new webpack.optimize.UglifyJsPlugin({//压缩js代码
+    new webpack.optimize.UglifyJsPlugin({//压缩js代码  这是webpack自带的插件  不需要下载包  也不需要引入 引入webpack就可以了
       compress: {//new一个webpack 需要导入wenpack
         warnings: false,//清除警告 空格 之类的东西
         drop_console: false,
       }
-    })
+    }),
+    new webpack.DefinePlugin({//这个也是webpack自带的包
+      'process.env.NODE_ENV':'"production"'//看看是不是生产  生产会去掉一些乱七八糟的警告
+    }),
+    new ExtractTextPlugin('styles.css')//生成一个styles.css文件 里面是压缩的css
   ]
 }
