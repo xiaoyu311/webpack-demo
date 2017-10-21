@@ -24,7 +24,13 @@ module.exports = {
   devServer: {//这是给webpack-dev-serve包看的
     hot: true,//模块热替换特性
     compress: true,//使用gzip压缩 使启动更快
-    port: 3000//改变端口
+    port: 3000,//改变端口
+    proxy: {
+            '/1.php': {
+                target: 'http://www.xiaoyu.com/1.php',//反向代理实现跨域
+                secure: false
+            }
+        }
   },
   devtool: "source-map",
   // 通过在浏览器调试工具(browser devtools)中添加元信息(meta info)增强调试
