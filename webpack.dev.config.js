@@ -7,6 +7,7 @@
 const path = require('path')//webpack核心模块，专门解析文件路径
 const webpack = require('webpack')//引入webpack
 const HtmlWebpackPlugin = require('html-webpack-plugin')//生成index.html
+const OpenBrowserWebpackPlugin = require('open-browser-webpack-plugin')
 
 module.exports = {
   entry: "./src/index.js",
@@ -19,6 +20,11 @@ module.exports = {
   },
   resolve: {
      extensions: [".js", ".json", ".jsx", ".css"],//解析这些文件，补齐后缀   这些文件就可以省略后缀，没有后缀他自己去尝试，
+  },
+  devServer: {//这是给webpack-dev-serve包看的
+    hot: true,//模块热替换特性
+    compress: true,//使用gzip压缩 使启动更快
+    port: 3000//改变端口
   },
   devtool: "source-map",
   // 通过在浏览器调试工具(browser devtools)中添加元信息(meta info)增强调试
@@ -43,6 +49,10 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: 'hello world',
       template: 'public/index.html'//html模板
+    }),
+    new webpack.HotModuleReplacementPlugin(),//配合hot：true
+    new OpenBrowserWebpackPlugin({
+      url: 'http://localhost:3000'
     })
   ]
 }

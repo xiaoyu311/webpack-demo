@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import './main'
-import img from './a.jpg'
+import App from './App'
 
 
-ReactDOM.render(<div><img src={img}/></div>,document.getElementById('root'))
+
+ReactDOM.render(<App />,document.getElementById('root'))
