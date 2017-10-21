@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import './main'
+import './index.scss'
 import axios from 'axios'
 
 export default class App extends Component {
@@ -16,7 +17,8 @@ export default class App extends Component {
     return(
       <div>
         <button onClick={this.handleClick.bind(this)}>请求</button>
-    </div>
+      <div id="sass">xiaoyu</div>
+      </div>
     )
   }
 }

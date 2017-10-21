@@ -42,8 +42,8 @@ module.exports = {
         loader: "babel-loader"
       },//webpack文件打包碰到.js结尾的文件  先用babel-loader处理
       {
-        test: /\.css$/,
-        use: ["style-loader", "css-loader","postcss-loader"]
+        test: /\.(css|scss|sass)$/,
+        use: ["style-loader", "css-loader", "sass-loader", "postcss-loader"]
       },
       {
         test: /\.(png|jpg|gif)$/,//打包img

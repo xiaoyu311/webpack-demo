@@ -30,10 +30,10 @@ module.exports = {
         loader: "babel-loader"
       },//webpack文件打包碰到.js结尾的文件  先用babel-loader处理
       {
-        test: /\.css$/,
+        test: /\.(css|scss|sass)$/,
         use: ExtractTextPlugin.extract({//css编译比较强大
           fallback: "style-loader",
-          use: ["css-loader","postcss-loader"]
+          use: ["css-loader", "sass-loader", "postcss-loader"]
         })
       },
       {
